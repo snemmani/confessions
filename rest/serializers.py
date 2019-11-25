@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class CommentSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
-    user = serializers.StringRelatedField(many=True)
+    user = serializers.StringRelatedField()
     text = serializers.CharField(max_length=2000)
     created = serializers.DateTimeField(read_only=True)
 
@@ -22,7 +22,6 @@ class ConfessionSerializer(serializers.ModelSerializer):
         many=True,
         read_only=True,
         source="filter_deleted_comment"
-        
     )
 
     def create(self, validated_data):

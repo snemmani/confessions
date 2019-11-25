@@ -10,7 +10,7 @@ class Confession(models.Model):
     deleted = models.BooleanField(default=False)
     
     def filter_deleted_comment(self):
-        Comment.objects.filter(confession=self, deleted=False)
+        return Comment.objects.filter(confession=self, deleted=False)
 
 
 class Comment(models.Model):
