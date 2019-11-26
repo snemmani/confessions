@@ -37,7 +37,10 @@ class ConfessionSerializer(serializers.ModelSerializer):
         Delete the Confession instance
         """
         confession = Confession.objects.get(pk=id)
-        confession.deleted = True
+        if confession.deleted:
+            raise Confession.DoesNotExist()
+        else:
+            confession.deleted = True
         confession.save()
 
     class Meta:

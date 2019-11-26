@@ -44,9 +44,20 @@ class ConfessionListView(APIView):
 class ConfessionDetailView(APIView):
     @action(methods=['get'], detail=False)
     def get(self, request, id):
-        confession = Confession.objects.get(pk=id)
-        serialized_confession = ConfessionSerializer(confession)
-        return Response(sserialized_confession.data)
+        try:
+            confession = Confession.objects.get(pk=id)
+            if not confession.deleted:
+                serialized_confession = ConfessionSerializer(confession)
+                return Response(serialized_confession.data)
+            else:
+                raise Confession.DoesNotExist()
+        except Confession.DoesNotExist:
+            return Response(
+                dict(
+                    error="Confession with id: {} not found".format(id)
+                ),
+                status=status.HTTP_404_NOT_FOUND
+            )
 
     @action(methods=['put'], detail=True)
     def put(self, request, id):
@@ -54,7 +65,10 @@ class ConfessionDetailView(APIView):
 
     @action(methods=['delete'], detail=True)
     def delete(self, request, id):
-        ConfessionSerializer.delete(id)
-        return Response(dict(error='Deleted id: {}'.format(id)),status=status.HTTP_200_OK)
+        try:
+            ConfessionSerializer.delete(id)
+            return Response(dict(message='Confession with id: {} deleted'.format(id)),status=status.HTTP_200_OK)
+        except Confession.DoesNotExist:
+            return Response(dict(error='Confession with id: {} not found'.format(id)),status=status.HTTP_404_NOT_FOUND)
 
     
