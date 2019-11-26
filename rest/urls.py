@@ -17,5 +17,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('confession/', views.ConfessionViewSet.as_view(), name='confessions'),
+    path('confession/', views.ConfessionListView.as_view(), name='confessions_cr'),
+    path('confession/<int:id>', views.ConfessionDetailView.as_view(), name='confessions_rud'),
 ]

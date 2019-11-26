@@ -24,17 +24,21 @@ class ConfessionSerializer(serializers.ModelSerializer):
         source="filter_deleted_comment"
     )
 
-    def create(self, validated_data):
+    @staticmethod
+    def create(validated_data):
         """
         Create and return a new Confession instance
         """
-        return Confession.objects.create(**validated_data)
+        return ConfessionSerializer(Confession.objects.create(**validated_data))
 
-    def delete(self, pk):
-        confession = Confession.objects.get(pk=pk)
+    @staticmethod
+    def delete(id):
+        """
+        Delete the Confession instance
+        """
+        confession = Confession.objects.get(pk=id)
         confession.deleted = True
         confession.save()
-        return confession
 
     class Meta:
         model = Confession

@@ -9,7 +9,7 @@ import json
 from json.decoder import JSONDecodeError
 
 # Create your views here.
-class ConfessionViewSet(APIView):
+class ConfessionListView(APIView):
     @action(methods=['get'], detail=False)
     def get(self, request):
         confessions = Confession.objects.filter(deleted=False)
@@ -31,7 +31,7 @@ class ConfessionViewSet(APIView):
 
         serializer = ConfessionSerializer()
         try:
-            response  = ConfessionSerializer(serializer.create(request_body))
+            response = ConfessionSerializer.create(request_body)
         except TypeError as e:
             return Response(
                 dict(
@@ -41,25 +41,20 @@ class ConfessionViewSet(APIView):
         
         return Response(response.data, status=status.HTTP_201_CREATED)
 
-    @action(methods=['post'], detail=True)
-    def post(self, request, id):
-        try:
-            request_body = json.loads(request.body)
-        except JSONDecodeError:
-            return Response(
-                dict(error='Failed to read provided request data. JSON data format is invalid'),
-                status=status.HTTP_400_BAD_REQUEST
-                )
+class ConfessionDetailView(APIView):
+    @action(methods=['get'], detail=False)
+    def get(self, request, id):
+        confession = Confession.objects.get(pk=id)
+        serialized_confession = ConfessionSerializer(confession)
+        return Response(sserialized_confession.data)
 
-        serializer = ConfessionSerializer()
-        try:
-            response  = ConfessionSerializer(serializer.create(request_body))
-        except TypeError as e:
-            return Response(
-                dict(
-                    error=e.args[0]
-                )
-            )
-        
-        return Response(response.data, status=status.HTTP_201_CREATED)
-        
+    @action(methods=['put'], detail=True)
+    def put(self, request, id):
+        return Response(dict(error='Not implemented'),status=status.HTTP_501_NOT_IMPLEMENTED)
+
+    @action(methods=['delete'], detail=True)
+    def delete(self, request, id):
+        ConfessionSerializer.delete(id)
+        return Response(dict(error='Deleted id: {}'.format(id)),status=status.HTTP_200_OK)
+
+    
