@@ -2,9 +2,11 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.decorators import action
-from .serializers import ConfessionSerializer
+from .serializers import ConfessionSerializer, CommentSerializer
 from .models import Confession
 from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 import json
 from json.decoder import JSONDecodeError
 
@@ -71,4 +73,43 @@ class ConfessionDetailView(APIView):
         except Confession.DoesNotExist:
             return Response(dict(error='Confession with id: {} not found'.format(id)),status=status.HTTP_404_NOT_FOUND)
 
-    
+
+class CommentListView(APIView):
+    # TODO: correct authentication
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    @action(methods=['post'], detail=True)
+    def post(self, request, confession_id):
+        try:
+            print(request.auth)
+            print(request.user)
+            confession = Confession.objects.get(pk=confession_id)
+            validated_data = json.loads(request.body)
+
+            comment = CommentSerializer.create(
+                confession,
+                validated_data
+            )
+
+            serializer = CommentSerializer(comment)
+            
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        except Confession.DoesNotExist:
+            return Response(
+                dict(
+                    error='Confession with id: {} does not exist'
+                ),
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except JSONDecodeError:
+            return Response(
+                dict(
+                    error='Received corrupt JSON data'
+                ),
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        
