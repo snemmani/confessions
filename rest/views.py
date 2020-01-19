@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.decorators import action
+from rest_framework.decorators import action, authentication_classes, permission_classes
 from .serializers import ConfessionSerializer, CommentSerializer
-from .models import Confession
+from .models import Confession, Comment
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -75,10 +75,33 @@ class ConfessionDetailView(APIView):
 
 
 class CommentListView(APIView):
-    # TODO: correct authentication
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticated]
+    @action(methods=['get'], detail=False)
+    def get(self, request, confession_id):
+        try:
+            confession = Confession.objects.get(pk=confession_id)
+        except Confession.DoesNotExist as e:
+            return Response(dict(
+                    error="Confession with id: {} not found".format(id)
+                ),
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        comments = Comment.objects.filter(
+            confession=confession
+        ).order_by(
+            '-id'
+        )
+
+        if comments.count() > 0:
+            comments_serializer = CommentSerializer(comments, many=True)
+            return Response(comments_serializer.data)
+        else:
+            return Response(Comment.objects.none())
+
+
     @action(methods=['post'], detail=True)
+    @authentication_classes([SessionAuthentication, BasicAuthentication])
+    @permission_classes([IsAuthenticated])
     def post(self, request, confession_id):
         try:
             print(request.auth)
