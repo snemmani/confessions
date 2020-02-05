@@ -1,1 +1,1 @@
-web: gunicorn confessions_rest:wsgi 
+web: gunicorn confessions_rest.wsgi 
