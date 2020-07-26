@@ -25,7 +25,7 @@ SECRET_KEY = ')y2=y69e0=lgsu++iodfrw%0m!_^s_2_n3k24^ol!507*^1y5z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['confessions-rest.herokuapp.com']
+ALLOWED_HOSTS = ['confessions-rest.herokuapp.com', 'localhost']
 
 
 # Application definition
