@@ -6,7 +6,7 @@ import re
 
 class JawsDBConnection:
     def __init__(self):
-        url = os.environ['DATABASE_URL']
+        url = os.environ['JAWSDB_MARIA_URL']
         match = re.search('mysql://(.*):(.*)@(.*):(.*)/(.*)', url)
         self.username = match.group(1)
         self.password = match.group(2)
