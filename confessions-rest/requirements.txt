@@ -4,3 +4,4 @@ djangorestframework==3.11.1
 gunicorn
 whitenoise
 pynt
+mysqlclient
