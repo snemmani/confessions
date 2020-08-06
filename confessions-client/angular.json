@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "confessions-ui": {
+    "confessions-client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/confessions-ui",
+            "outputPath": "dist/confessions-client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,7 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -67,18 +67,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "confessions-ui:build"
+            "browserTarget": "confessions-client:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "confessions-ui:build:production"
+              "browserTarget": "confessions-client:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "confessions-ui:build"
+            "browserTarget": "confessions-client:build"
           }
         },
         "test": {
@@ -93,7 +93,7 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -116,16 +116,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "confessions-ui:serve"
+            "devServerTarget": "confessions-client:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "confessions-ui:serve:production"
+              "devServerTarget": "confessions-client:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "confessions-ui"
+  "defaultProject": "confessions-client"
 }

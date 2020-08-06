@@ -1,8 +1,0 @@
-{
-  "/api/**": {
-    "target": {
-      "port": "8000"
-    },
-    "secure": false
-  }
-}

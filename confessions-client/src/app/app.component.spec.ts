@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'confessions-ui'`, () => {
+  it(`should have as title 'confessions-client'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('confessions-ui');
+    expect(app.title).toEqual('confessions-client');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('confessions-ui app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('confessions-client app is running!');
   });
 });
