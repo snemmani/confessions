@@ -9,7 +9,7 @@ class JawsDBConnection:
         url = os.environ['DATABASE_URL']
         match = re.search('mysql://(.*):(.*)@(.*):(.*)/(.*)', url)
         self.username = match.group(1)
-        self.password = match.group(1)
-        self.host = match.group(1)
-        self.port = match.group(1)
-        self.database = match.group(1)
+        self.password = match.group(2)
+        self.host = match.group(3)
+        self.port = match.group(4)
+        self.database = match.group(5)
