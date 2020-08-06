@@ -1,6 +1,6 @@
 Django>=2.2.9
 django-filter==2.2.0
-djangorestframework==3.10.3
+djangorestframework==3.11.1
 gunicorn
 whitenoise
 pynt
