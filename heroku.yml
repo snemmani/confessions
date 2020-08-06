@@ -1,3 +1,6 @@
 build:
   docker:
     web: Dockerfile
+addons:
+  - plan: jawsdb-maria-rectangular-27566
+    as: DATABASE
