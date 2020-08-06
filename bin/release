@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd confessions-rest
+
+pip install -r requirements.txt
+
+cd ../
+
+pynt clean_install

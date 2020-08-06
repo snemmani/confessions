@@ -31,7 +31,9 @@ def build_client():
 def clean():
     """Clean the client node_modules installation"""
     os.chdir(client_dir)
-    shutil.rmtree(os.path.join(client_dir, 'node_modules'))
+    node_modules = os.path.join(client_dir, 'node_modules')
+    if os.path.isdir(node_modules):
+        shutil.rmtree(node_modules)
 
 
 @task()
