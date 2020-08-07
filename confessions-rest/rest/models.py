@@ -20,12 +20,15 @@ class Confession(models.Model):
             deleted=False
         )
 
+    def get_votes(self):
+        return Vote.objects.filter(confession=self)
+
 
 class Vote(models.Model):
-
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='upvotes', null=False)
-    comment = models.ForeignKey(to="Comment", on_delete=models.PROTECT, related_name="upvotes", null=False)
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='votes', null=False)
+    comment = models.ForeignKey(to="Comment", on_delete=models.PROTECT, related_name="comment_votes", null=True)
+    confession = models.ForeignKey(to="Confession", on_delete=models.PROTECT, related_name="confession_votes", null=True)
     created = models.DateTimeField(auto_now_add=True)
     vote_type = models.IntegerField(choices=vote_choices, default=1)
 
@@ -33,7 +36,12 @@ class Vote(models.Model):
         ordering = ['-id']
 
     def __str__(self):
-        return 'Vote {} by {} on comment id {}'.format(self.vote_type, self.user.username, self.comment.id)
+        if hasattr(self, 'confession'):
+            return 'Vote {} by {} on confession id {}'.format(self.vote_type, self.user.username, self.confession.id)
+        elif hasattr(self, 'comment'):
+            return 'Vote {} by {} on comment id {}'.format(self.vote_type, self.user.username, self.comment.id)
+        else:
+            raise Exception('Vote {} invalid'.format(self.id))
 
 
 class Comment(models.Model):

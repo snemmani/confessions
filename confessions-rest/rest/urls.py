@@ -21,5 +21,7 @@ urlpatterns = [
     path('confession/', views.ConfessionListView.as_view(), name='confessions_cl'),
     path('confession/<int:confession_id>', views.ConfessionDetailView.as_view(), name='confessions_rud'),
     path('confession/<int:confession_id>/comment', views.CommentListView.as_view(), name='comment_cl'),
-    path('comment/<int:comment_id>', views.CommentDetailView.as_view(), name='comment_rud')
+    path('confession/<int:confession_id>/vote', views.ConfessionVoteView.as_view(), name='confession_vote'),
+    path('comment/<int:comment_id>', views.CommentDetailView.as_view(), name='comment_rud'),
+    path('comment/<int:comment_id>/vote', views.CommentVoteView.as_view(), name='comment_vote')
 ]

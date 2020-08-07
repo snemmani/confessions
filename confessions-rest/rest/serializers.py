@@ -18,11 +18,12 @@ class CommentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
     text = serializers.CharField(max_length=2000)
     created = serializers.DateTimeField(read_only=True)
+    updated = serializers.DateTimeField(read_only=True)
     votes = VoteSerializer(many=True, read_only=True, source="get_votes")
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'text', 'votes', 'created']
+        fields = ['id', 'user', 'text', 'votes', 'created', 'updated']
 
     @staticmethod
     def create(confession, user, validated_data):
@@ -58,6 +59,11 @@ class ConfessionSerializer(serializers.ModelSerializer):
         read_only=True,
         source="filter_deleted_comment"
     )
+    votes = VoteSerializer(
+        many=True,
+        read_only=True,
+        source="get_votes"
+    )
 
     @staticmethod
     def create(validated_data):
@@ -80,4 +86,4 @@ class ConfessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Confession
-        fields = ['id', 'heading', 'text', 'created', 'comments']
+        fields = ['id', 'heading', 'text', 'created', 'comments', 'votes']
