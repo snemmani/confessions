@@ -1,124 +1,227 @@
 {
 	"info": {
-		"_postman_id": "275e8bf4-46c2-4007-a7d2-4091cc3ee309",
+		"_postman_id": "f06153bf-5da4-49fc-bf4f-2fda28f13117",
 		"name": "confessions",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "/api/confession",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8000/api/confession",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"confession"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/api/confession",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"heading\": \"A heading fit for a head\",\n\t\"text\": \"Did something really\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Confession",
+			"item": [
+				{
+					"name": "Comment",
+					"item": [
+						{
+							"name": "/api/confession/{id}/comment/",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"text\": \"This is a successfull comment? Is it successfull?\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/confession/3/comment/",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"confession",
+										"3",
+										"comment",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/confession/{id}/comment",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "M49d4@Sri",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "snemmani",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"user\": \"snemmani\",\n    \"text\": \"This is a successfull comment? Is it successfull?\",\n    \"upvote_count\": 1,\n    \"downvote_count\": 0,\n    \"created\": \"2020-08-07T11:45:06.688348+05:30\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/comment/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"comment",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
-					}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
-				"url": {
-					"raw": "localhost:8000/api/confession/",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"confession",
-						""
-					]
+				{
+					"name": "/api/confession",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/confession",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"confession"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/confession",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"heading\": \"A heading fit for a the app\",\n\t\"text\": \"Did something really\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/confession/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"confession",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/confession/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/confession/3/",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"confession",
+								"3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/confession/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/confession/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"confession",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/confession/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8000/api/confession/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"confession",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "/api/confession/{id}",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8000/api/confession/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"confession",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/api/confession/{id}",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"url": {
-					"raw": "localhost:8000/api/confession/3",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"confession",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/api/confession/{id}",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8000/api/confession/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"confession",
-						"1"
-					]
-				}
-			},
-			"response": []
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}
