@@ -1,5 +1,13 @@
-- name: Attach to Trello Card
-  uses: delivered/attach-to-trello-card-action@v2.0.0
-  with:
-    trello-key: d51ce8e171b641110b7aa272ae4322d4
-    trello-token: e2af7e7a795fda7273316f7b2e4ed5c969b3ca33e8fe6b56714d7711da4a14a3
+name: Attach to Trello
+on:
+  pull_request:
+    types: [opened, reopened, edited]
+jobs:
+  attach-trello:
+    runs-on: ubuntu-latest
+    name: Find trello link and attach to card
+    steps:
+      - uses: delivered/attach-to-trello-card-action@master
+        with:
+          trello-key: ${{ secrets.TRELLO_KEY }}
+          trello-token: ${{ secrets.TRELLO_TOKEN }}
