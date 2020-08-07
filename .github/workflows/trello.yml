@@ -1,0 +1,7 @@
+- name: Attach to Trello Card
+  uses: delivered/attach-to-trello-card-action@v2.0.0
+  with:
+    # (public) Trello auth key for account
+    trello-key: d51ce8e171b641110b7aa272ae4322d4
+    # secret Trello auth token for account
+    trello-token: e2af7e7a795fda7273316f7b2e4ed5c969b3ca33e8fe6b56714d7711da4a14a3
