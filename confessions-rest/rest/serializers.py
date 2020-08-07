@@ -1,30 +1,40 @@
 from rest_framework import serializers
-from .models import Confession, Comment
+from .models import Confession, Comment, Vote, vote_choices
 from django.db import models
 from django.contrib.auth.models import User
+
+
+class VoteSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+    vote_type = serializers.ChoiceField(choices=vote_choices)
+
+    class Meta:
+        model = Vote
+        fields = ['user', 'vote_type']
+
 
 class CommentSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = serializers.StringRelatedField()
-    upvote_count = serializers.IntegerField()
-    downvote_count = serializers.IntegerField()
     text = serializers.CharField(max_length=2000)
     created = serializers.DateTimeField(read_only=True)
+    votes = VoteSerializer(many=True, read_only=True, source="get_votes")
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'text', 'upvote_count', 'downvote_count', 'created']
+        fields = ['id', 'user', 'text', 'votes', 'created']
 
     @staticmethod
-    def create(confession, validated_data):
+    def create(confession, user, validated_data):
         """
         Create and return a new Comment instance
         """
-        Comment.objects.create(
+        return Comment.objects.create(
             confession=confession,
+            user=user,
             **validated_data
         )
-    
+
     @staticmethod
     def delete(id):
         """
@@ -36,6 +46,7 @@ class CommentSerializer(serializers.ModelSerializer):
         else:
             comment.deleted = True
         comment.save()
+
 
 class ConfessionSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)

@@ -19,6 +19,7 @@ from . import views
 
 urlpatterns = [
     path('confession/', views.ConfessionListView.as_view(), name='confessions_cl'),
-    path('confession/<int:id>', views.ConfessionDetailView.as_view(), name='confessions_rud'),
-    path('confession/<int:confession_id>/comment', views.CommentListView.as_view(), name='comment_cl')
+    path('confession/<int:confession_id>', views.ConfessionDetailView.as_view(), name='confessions_rud'),
+    path('confession/<int:confession_id>/comment', views.CommentListView.as_view(), name='comment_cl'),
+    path('comment/<int:comment_id>', views.CommentDetailView.as_view(), name='comment_rud')
 ]
