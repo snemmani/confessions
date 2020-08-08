@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from .models import Confession
 
+
 class ConfessionTests(APITestCase):
     def test_create_confession_valid(self):
         """
@@ -74,4 +75,3 @@ class ConfessionTests(APITestCase):
         response2 = self.client.delete(url)
         response2 = self.client.get(url)
         self.assertEqual(response2.status_code, status.HTTP_404_NOT_FOUND)
-        
