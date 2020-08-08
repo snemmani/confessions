@@ -113,7 +113,7 @@ class CommentListView(APIView):
 
 
 class CommentDetailView(APIView):
-    permission_classes = [IsAuthenticated | ReadOnly]
+    permission_classes = [IsAuthenticated]
 
     @action(methods=['put'], detail=True, description='Modify a comment')
     @authentication_classes([SessionAuthentication, BasicAuthentication])
@@ -132,6 +132,14 @@ class CommentDetailView(APIView):
         serializer = CommentSerializer(comment)
 
         return get_response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(methods=['delete'], detail=True, description='Delete a comment')
+    @authentication_classes([SessionAuthentication, BasicAuthentication])
+    def delete(self, request, comment_id):
+        comment = get_object_or_404(Comment, pk=comment_id)
+        comment.deleted = True
+        comment.save()
+        return get_response(dict(message='Deleted'), status.HTTP_201_CREATED)
 
 
 class CommentVoteView(APIView):
