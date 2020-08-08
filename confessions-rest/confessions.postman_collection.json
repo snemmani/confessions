@@ -12,20 +12,35 @@
 					"name": "Comment",
 					"item": [
 						{
-							"name": "/api/confession/{id}/comment/",
+							"name": "/api/confession/{id}/comment",
 							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "M49d4@Sri",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "snemmani",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
 										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"type": "text",
+										"value": "application/json"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"text\": \"This is a successfull comment? Is it successfull?\"\n}",
+									"raw": "{\n\t\"text\": \"This is a successfull comment? Is it first\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -33,7 +48,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8000/api/confession/3/comment/",
+									"raw": "localhost:8000/api/confession/1/comment",
 									"host": [
 										"localhost"
 									],
@@ -41,16 +56,15 @@
 									"path": [
 										"api",
 										"confession",
-										"3",
-										"comment",
-										""
+										"1",
+										"comment"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "/api/confession/{id}/comment",
+							"name": "/api/comment/{id}",
 							"request": {
 								"auth": {
 									"type": "basic",
@@ -72,13 +86,13 @@
 									{
 										"key": "Content-Type",
 										"name": "Content-Type",
-										"value": "application/json",
-										"type": "text"
+										"type": "text",
+										"value": "application/json"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": 1,\n    \"user\": \"snemmani\",\n    \"text\": \"This is a successfull comment? Is it successfull?\",\n    \"upvote_count\": 1,\n    \"downvote_count\": 0,\n    \"created\": \"2020-08-07T11:45:06.688348+05:30\"\n}",
+									"raw": "{\n    \"text\": \"This is a successfull comment? Is it updated?\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -95,6 +109,114 @@
 										"api",
 										"comment",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/comment/{id}/vote",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "M49d4@Sri",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "snemmani",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"vote_type\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8000/api/comment/2/vote",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"comment",
+										"2",
+										"vote"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/confession/{id}/comment",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/confession/1/comment",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"confession",
+										"1",
+										"comment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/comment/{id}",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "M49d4@Sri",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "snemmani",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8000/api/comment/2",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"comment",
+										"2"
 									]
 								}
 							},
@@ -165,7 +287,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8000/api/confession/3/",
+							"raw": "localhost:8000/api/confession/1",
 							"host": [
 								"localhost"
 							],
@@ -173,8 +295,7 @@
 							"path": [
 								"api",
 								"confession",
-								"3",
-								""
+								"1"
 							]
 						}
 					},
@@ -215,6 +336,46 @@
 								"api",
 								"confession",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/confession/{id}/vote",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"vote_type\": -1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8000/api/confession/1/vote",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"confession",
+								"1",
+								"vote"
 							]
 						}
 					},
