@@ -59,11 +59,12 @@ class ConfessionDetailView(APIView):
 
     @action(methods=['delete'], detail=True)
     def delete(self, request, confession_id):
-        try:
-            ConfessionSerializer.delete(id)
-            return get_response(dict(message='Confession with id: {} deleted'.format(id)), status=status.HTTP_200_OK)
-        except Confession.DoesNotExist:
-            return get_error_response('Confession with id: {} not found'.format(id), status=status.HTTP_404_NOT_FOUND)
+        return get_error_response('Not implemented', status.HTTP_501_NOT_IMPLEMENTED)
+        # try:
+        #     ConfessionSerializer.delete(id)
+        #     return get_response(dict(message='Confession with id: {} deleted'.format(id)), status=status.HTTP_200_OK)
+        # except Confession.DoesNotExist:
+        #     return get_error_response('Confession with id: {} not found'.format(id), status=status.HTTP_404_NOT_FOUND)
 
 
 class CommentListView(APIView):
@@ -107,7 +108,7 @@ class CommentListView(APIView):
                 status=status.HTTP_201_CREATED
             )
         except Confession.DoesNotExist:
-            return get_error_response('Confession with id: {} does not exist', status.HTTP_404_NOT_FOUND)
+            return get_error_response('Confession with id: {} does not exist'.format(confession_id), status.HTTP_404_NOT_FOUND)
         except JSONDecodeError:
             return get_error_response('Received corrupt JSON data', status=status.HTTP_400_BAD_REQUEST)
 
@@ -137,6 +138,8 @@ class CommentDetailView(APIView):
     @authentication_classes([SessionAuthentication, BasicAuthentication])
     def delete(self, request, comment_id):
         comment = get_object_or_404(Comment, pk=comment_id)
+        if comment.deleted:
+            return get_error_response('Comment with id: {}, does not exist'.format(comment_id), status.HTTP_404_NOT_FOUND)
         comment.deleted = True
         comment.save()
         return get_response(dict(message='Deleted'), status.HTTP_201_CREATED)

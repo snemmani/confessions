@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-vote_choices = ((1, 'UPVOTE'), (2, 'DOWNVOTE'))
+vote_choices = ((1, 'UPVOTE'), (-1, 'DOWNVOTE'))
 
 
 class Confession(models.Model):
@@ -15,10 +15,7 @@ class Confession(models.Model):
     deleted = models.BooleanField(default=False)
     
     def filter_deleted_comment(self):
-        return Comment.objects.filter(
-            confession=self, 
-            deleted=False
-        )
+        return self.comment_set.filter(deleted=False)
 
     def get_upvotes_count(self):
         return Vote.objects.filter(confession=self, vote_type=1).count()
@@ -29,9 +26,9 @@ class Confession(models.Model):
 
 class Vote(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='votes', null=False)
-    comment = models.ForeignKey(to="Comment", on_delete=models.PROTECT, related_name="comment_votes", null=True)
-    confession = models.ForeignKey(to="Confession", on_delete=models.PROTECT, related_name="confession_votes", null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='votes', null=False)
+    comment = models.ForeignKey(to="Comment", on_delete=models.CASCADE, related_name="comment_votes", null=True)
+    confession = models.ForeignKey(to="Confession", on_delete=models.CASCADE, related_name="confession_votes", null=True)
     created = models.DateTimeField(auto_now_add=True)
     vote_type = models.IntegerField(choices=vote_choices, default=1)
 
@@ -49,8 +46,8 @@ class Vote(models.Model):
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='comments', null=False)
-    confession = models.ForeignKey(to="Confession", on_delete=models.PROTECT)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments', null=False)
+    confession = models.ForeignKey(to="Confession", on_delete=models.CASCADE)
     text = models.TextField(max_length=2000, null=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -63,7 +60,7 @@ class Comment(models.Model):
         return self.text
 
     def get_upvotes_count(self):
-        return Vote.objects.filter(confession=self, vote_type=1).count()
+        return Vote.objects.filter(comment=self, vote_type=1).count()
 
     def get_downvotes_count(self):
-        return Vote.objects.filter(confession=self, vote_type=-1).count()
+        return Vote.objects.filter(comment=self, vote_type=-1).count()
