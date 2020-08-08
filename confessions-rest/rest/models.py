@@ -20,8 +20,11 @@ class Confession(models.Model):
             deleted=False
         )
 
-    def get_votes(self):
-        return Vote.objects.filter(confession=self)
+    def get_upvotes_count(self):
+        return Vote.objects.filter(confession=self, vote_type=1).count()
+
+    def get_downvotes_count(self):
+        return Vote.objects.filter(confession=self, vote_type=-1).count()
 
 
 class Vote(models.Model):
@@ -59,5 +62,8 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
-    def get_votes(self):
-        return Vote.objects.filter(comment=self)
+    def get_upvotes_count(self):
+        return Vote.objects.filter(confession=self, vote_type=1).count()
+
+    def get_downvotes_count(self):
+        return Vote.objects.filter(confession=self, vote_type=-1).count()

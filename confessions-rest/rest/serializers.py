@@ -19,11 +19,16 @@ class CommentSerializer(serializers.ModelSerializer):
     text = serializers.CharField(max_length=2000)
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
-    votes = VoteSerializer(many=True, read_only=True, source="get_votes")
+    upvotes_count = serializers.IntegerField(
+        source="get_upvotes_count"
+    )
+    downvotes_count = serializers.IntegerField(
+        source="get_downvotes_count"
+    )
 
     class Meta:
         model = Comment
-        fields = ['id', 'user', 'text', 'votes', 'created', 'updated']
+        fields = ['id', 'user', 'text', 'upvotes_count', 'downvotes_count', 'created', 'updated']
 
     @staticmethod
     def create(confession, user, validated_data):
@@ -59,10 +64,11 @@ class ConfessionSerializer(serializers.ModelSerializer):
         read_only=True,
         source="filter_deleted_comment"
     )
-    votes = VoteSerializer(
-        many=True,
-        read_only=True,
-        source="get_votes"
+    upvotes_count = serializers.IntegerField(
+        source="get_upvotes_count"
+    )
+    downvotes_count = serializers.IntegerField(
+        source="get_downvotes_count"
     )
 
     @staticmethod
@@ -86,4 +92,4 @@ class ConfessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Confession
-        fields = ['id', 'heading', 'text', 'created', 'comments', 'votes']
+        fields = ['id', 'heading', 'text', 'created', 'comments', 'upvotes_count', 'downvotes_count']

@@ -10,6 +10,7 @@ import json
 from json.decoder import JSONDecodeError
 from django.shortcuts import get_object_or_404
 from .helper import get_response, get_error_response, do_vote
+from .permissions import ReadOnly
 
 
 # Create your views here.
@@ -66,6 +67,8 @@ class ConfessionDetailView(APIView):
 
 
 class CommentListView(APIView):
+    permission_classes = [IsAuthenticated | ReadOnly]
+
     @action(methods=['get'], detail=False)
     def get(self, request, confession_id):
         try:
@@ -87,7 +90,6 @@ class CommentListView(APIView):
 
     @action(methods=['post'], detail=True)
     @authentication_classes([SessionAuthentication, BasicAuthentication])
-    @permission_classes([IsAuthenticated])
     def post(self, request, confession_id):
         try:
             confession = Confession.objects.get(pk=confession_id)
@@ -111,9 +113,10 @@ class CommentListView(APIView):
 
 
 class CommentDetailView(APIView):
+    permission_classes = [IsAuthenticated | ReadOnly]
+
     @action(methods=['put'], detail=True, description='Modify a comment')
     @authentication_classes([SessionAuthentication, BasicAuthentication])
-    @permission_classes([IsAuthenticated])
     def put(self, request, comment_id):
         comment = get_object_or_404(Comment, pk=comment_id)
         if request.user.id != comment.user.id:
@@ -132,16 +135,18 @@ class CommentDetailView(APIView):
 
 
 class CommentVoteView(APIView):
+    permission_classes = [IsAuthenticated]
+
     @action(methods=['post'], detail=True, description='Vote on a comment')
     @authentication_classes([SessionAuthentication, BasicAuthentication])
-    @permission_classes([IsAuthenticated])
     def post(self, request, comment_id):
         return do_vote('comment', comment_id, request)
 
 
 class ConfessionVoteView(APIView):
+    permission_classes = [IsAuthenticated]
+
     @action(methods=['post'], detail=True, description='Vote on a confession')
     @authentication_classes([SessionAuthentication, BasicAuthentication])
-    @permission_classes([IsAuthenticated])
     def post(self, request, confession_id):
         return do_vote('confession', confession_id, request)
