@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   push:
-    branches: [ develop, master ]
+    branches: [ feature/*, develop, master ]
   pull_request:
     branches: [ develop, master ]
 
@@ -29,4 +29,4 @@ jobs:
     - name: Run Tests
       run: |
         cd confessions-rest
-        python manage.py test
+        python manage.py test --settings=confessions_rest.settings_unittest

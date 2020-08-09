@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from .jawsdb import JawsDBConnection
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -72,21 +71,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'confessions_rest.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-jawsDb = JawsDBConnection()
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': jawsDb.username,
-        'PASSWORD': jawsDb.password,
-        'HOST': jawsDb.host,
-        'PORT': jawsDb.port,
-        'NAME': jawsDb.database
-    }
-}
 
 
 # Password validation
