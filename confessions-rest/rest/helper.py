@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Vote
+
+
 def get_error_response(message, status):
     """Returns a Response object with specific error message and status code"""
     return Response(

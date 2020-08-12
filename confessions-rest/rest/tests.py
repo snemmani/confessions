@@ -3,12 +3,13 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from .models import Confession
 
+
 class ConfessionTests(APITestCase):
     def test_create_confession_valid(self):
         """
         Ensure we can create a new Confession object.
         """
-        url = reverse('confessions_cr')
+        url = reverse('confessions_cl')
         data = {'heading': 'Test Heading', 'text': 'Some Valid Text'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -20,7 +21,7 @@ class ConfessionTests(APITestCase):
         """
         Ensure we can create a new Confession object.
         """
-        url = reverse('confessions_cr')
+        url = reverse('confessions_cl')
         data = {'heading': 'Test Heading', 'text': 1}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -32,7 +33,7 @@ class ConfessionTests(APITestCase):
         """
         Ensure we can can get all confession objects.
         """
-        url = reverse('confessions_cr')
+        url = reverse('confessions_cl')
         data = {'heading': 'Test Heading', 'text': 1}
         response = self.client.post(url, data, format='json')
         response2 = self.client.get(url)
@@ -42,7 +43,7 @@ class ConfessionTests(APITestCase):
         """
         Ensure we can create a Single confession object.
         """
-        url_p = reverse('confessions_cr')
+        url_p = reverse('confessions_cl')
         url = reverse('confessions_rud', args=[1])
         url_404 = reverse('confessions_rud', args=[100])
         data = {'heading': 'Test Heading', 'text': 1}
@@ -56,7 +57,7 @@ class ConfessionTests(APITestCase):
         """
         Ensure we can edit a Single confession object.
         """
-        url_p = reverse('confessions_cr')
+        url_p = reverse('confessions_cl')
         url = reverse('confessions_rud', args=[1])
         data = {'heading': 'Test Heading', 'text': 1}
         response = self.client.post(url_p, data, format='json')
@@ -67,11 +68,7 @@ class ConfessionTests(APITestCase):
         """
         Ensure we can delete a Single confession object.
         """
-        url_p = reverse('confessions_cr')
         url = reverse('confessions_rud', args=[1])
         data = {'heading': 'Test Heading', 'text': 1}
-        response = self.client.post(url_p, data, format='json')
         response2 = self.client.delete(url)
-        response2 = self.client.get(url)
-        self.assertEqual(response2.status_code, status.HTTP_404_NOT_FOUND)
-        
+        self.assertEqual(response2.status_code, status.HTTP_501_NOT_IMPLEMENTED)
