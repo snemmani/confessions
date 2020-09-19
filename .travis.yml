@@ -8,7 +8,7 @@ stages:
 jobs:
   include:
     - stage: test
-      script: cd confessions-rest && python manage.py test
+      script: python manage.py test
 env:
   - DJANGO_SETTINGS_MODULE: confessions_rest.settings_unittest
 
