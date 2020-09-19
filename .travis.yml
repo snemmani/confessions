@@ -8,9 +8,9 @@ stages:
 jobs:
   include:
     - stage: test
-      script: python manage.py test
-    - stagee: sonar-scan
-      script: sonanr-scanner
+      script:
+        - python manage.py test
+        - sonar-scanner
 env:
   - DJANGO_SETTINGS_MODULE: confessions_rest.settings_unittest
 addons:
