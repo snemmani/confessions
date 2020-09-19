@@ -11,7 +11,7 @@ jobs:
       script:
         - coverage run --source='.' manage.py test --settings=confessions_rest.settings_unittest
         - coverage xml
-        - sonar-scanner
+        - cd .. && sonar-scanner
 env:
   - DJANGO_SETTINGS_MODULE: confessions_rest.settings_unittest
 addons:
