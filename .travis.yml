@@ -20,5 +20,8 @@ addons:
 deploy:
   provider: heroku
   app: confessions-asns
+  on:
+    branch: develop
+    repo: snemmani/confessions
   api_key:
     secure: $HEROKU_TOKEN
