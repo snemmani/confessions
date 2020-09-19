@@ -1,4 +1,5 @@
 # Confessions REST API
+[![Build Status](https://travis-ci.org/snemmani/confessions.svg?branch=develop)](https://travis-ci.org/snemmani/confessions)
 ## Introduction to the app
 This project is for posting anonymous confessions. It aims to manage confession (workplace/personal/any other deed) 
 confessed by a user and then let other users vote the confession based on authenticity/relevance/acceptance.

@@ -9,7 +9,13 @@ jobs:
   include:
     - stage: test
       script: python manage.py test
+    - stagee: sonar-scan
+      script: sonanr-scanner
 env:
   - DJANGO_SETTINGS_MODULE: confessions_rest.settings_unittest
-
+addons:
+  sonarcloud:
+    organization: "sonarcloud_organization_key" # the key of the org you chose at step #3
+    token:
+      secure: $SONAR_TOKEN" # encrypted value of your token
 
