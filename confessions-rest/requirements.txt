@@ -5,3 +5,4 @@ gunicorn
 whitenoise
 pynt
 mysqlclient
+coverage
