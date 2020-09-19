@@ -17,6 +17,5 @@ env:
 addons:
   sonarcloud:
     organization: "snemmani" # the key of the org you chose at step #3
-    token:
-      secure: $SONAR_TOKEN # encrypted value of your token
+    token: $SONAR_TOKEN
 
