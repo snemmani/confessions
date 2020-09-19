@@ -2,21 +2,21 @@ language: python
 dist: xenial
 python: 3.7
 install:
-  - cd confessions-rest && pip install -r requirements.txt
+- cd confessions-rest && pip install -r requirements.txt
 stages:
-  - test
+- test
 jobs:
   include:
-    - stage: test
-      script:
-        - coverage run --source='.' manage.py test --settings=confessions_rest.settings_unittest
-        - coverage xml
-        - cd .. && sonar-scanner
+  - stage: test
+    script:
+    - coverage run --source='.' manage.py test --settings=confessions_rest.settings_unittest
+    - coverage xml
+    - cd .. && sonar-scanner
 env:
-  - DJANGO_SETTINGS_MODULE: confessions_rest.settings_unittest
+- DJANGO_SETTINGS_MODULE: confessions_rest.settings_unittest
 addons:
   sonarcloud:
-    organization: "snemmani" # the key of the org you chose at step #3
+    organization: snemmani
 deploy:
   provider: heroku
   app: confessions-asns
@@ -24,4 +24,4 @@ deploy:
     branch: develop
     repo: snemmani/confessions
   api_key:
-    secure: $HEROKU_TOKEN
+    secure: HcTTCECZ5KAmq2e7iODkYXNPR7ezSjhoJkrTaDJbqBhf3Z9NjuQi+auWE6oVYPwgjKIDMV/3hL+NiIncdxgQ6mIEURN4xkjTofQncy7vx7T34f+R8DEB9G/BiCig3t4VOOx94R44wtPj3xaOdzlfvKnDN3OP9qLX8vyZ/Qug7ed1hR19ps8Lg4x5hvzH7Omt4YhIFaQ/KCksjmUJwU+Voy0ErnaLz0nx2ZiDdUnO4mZOA9MHkQCeSJUhAbnvP+S6DOJqqHi1iZ4FaF0ekCPJkq/S3s6DV/BuDi6Mr16n4RTWEmFWNLcwLfask6xjhYH8+JZ7w4iwsX9TLyquW/kGw8uoYkTmkTsRP6vfUBrX66X8cLh5HnoLjtqsE+sPHFkJ+jo7yWX6zKfUYRT0MNkZhK3zHJJh7Y84Cbwqe93NOKvkPKq+wfhPgn7rTk8PCvx5arUAW5vaPikdwHtNsPm/iFcMK1u+NoBVaEAeMjfiJyO+lBoimtOQmX15K9UigZUsRvmfvWSmqgAwLZihWiNLI065fesTyxqJWQysXjCO/kv9UNsFyuKtOwDHxHjIq+PsZpfSjYczoP0YrD2rS4MZcYOS3nKRo88gDhbQMzOjTARuCHH1CxkEXBHdwpALiKh3rRcOWrV13KwJTOcafFKNmTz/JPt6/olc38Xc50L/GlQ=
