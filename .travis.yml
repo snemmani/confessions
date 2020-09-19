@@ -11,10 +11,14 @@ jobs:
       script:
         - coverage run --source='.' manage.py test --settings=confessions_rest.settings_unittest
         - coverage xml
-        - cd .. && sonar-scanner -X
+        - cd .. && sonar-scanner
 env:
   - DJANGO_SETTINGS_MODULE: confessions_rest.settings_unittest
 addons:
   sonarcloud:
     organization: "snemmani" # the key of the org you chose at step #3
-
+deploy:
+  provider: heroku
+  app: confessions-asns
+  api_key:
+    secure: $HEROKU_TOKEN
