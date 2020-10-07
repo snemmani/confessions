@@ -6,3 +6,4 @@ whitenoise
 pynt
 mysqlclient
 coverage
+pybrake~=0.4.6

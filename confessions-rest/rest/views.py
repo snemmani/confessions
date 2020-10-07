@@ -1,16 +1,19 @@
-from django.shortcuts import render
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.decorators import action, authentication_classes, permission_classes
-from .serializers import ConfessionSerializer, CommentSerializer
-from .models import Confession, Comment, Vote, vote_choices
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
 import json
 from json.decoder import JSONDecodeError
+
+import pybrake
+from django.conf import settings
 from django.shortcuts import get_object_or_404
+from rest_framework import status
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.decorators import action, authentication_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+
 from .helper import get_response, get_error_response, do_vote
+from .models import Confession, Comment
 from .permissions import ReadOnly
+from .serializers import ConfessionSerializer, CommentSerializer
 
 
 # Create your views here.
@@ -50,7 +53,11 @@ class ConfessionDetailView(APIView):
                 return get_response(serialized_confession.data)
             else:
                 raise Confession.DoesNotExist()
-        except Confession.DoesNotExist:
+        except Confession.DoesNotExist as error:
+            notifier = pybrake.Notifier(project_id=settings.AIRBRAKE['project_id'],
+                                        project_key=settings.AIRBRAKE['project_key'],
+                                        root_directory=settings.BASE_DIR)
+            notifier.notify(error)
             return get_error_response("Confession with id: {} not found".format(id), status=status.HTTP_404_NOT_FOUND)
 
     @action(methods=['put'], detail=True)
